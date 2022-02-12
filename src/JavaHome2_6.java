@@ -5,8 +5,11 @@ public class JavaHome2_6 {
         int[][] arr = {{1, 1, 1, 2, 1}, {2, 1, 1, 2, 1}, {10, 10}};
         for (int i = 0; i < arr.length; i++)
             System.out.println(checkBalance(arr[i]));
-        System.out.println();
+
     }
+
+
+
 
 
 
@@ -21,6 +24,7 @@ public class JavaHome2_6 {
         }
         if (summaArr % 2 != 0) {
             return false;
+
         }
         for (int i = 0; i < arr.length - 1; i++) {
             summma1 += arr[i];
