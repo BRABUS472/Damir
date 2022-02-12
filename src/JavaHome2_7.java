@@ -9,6 +9,7 @@ public class JavaHome2_7 {
         if (arr == null || arr.length < 2
                 || n == 0 || n % arr.length == 0)
             System.out.println("не верные данные");
+        System.out.println("не верные данные");
         if (n > 0) {
             int i;
             for (int j = 0; j < n; j++) {
