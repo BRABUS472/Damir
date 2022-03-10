@@ -3,6 +3,7 @@ package home_work_3;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
+
 /* Создать массив из слов
  String[] words = {"apple", "orange", "lemon", "banana", "apricot", "avocado", "broccoli", "carrot",
  "cherry", "garlic", "grape", "melon", "leak", "kiwi", "mango", "mushroom", "nut", "olive", "pea",
@@ -21,6 +22,7 @@ import java.util.Scanner;
  */
 public class HomeWork3_2 {
     public static Scanner sc = new Scanner(System.in);
+
     public static void main(String[] args) {
         String[] words = {"apple", "orange", "lemon", "banana", "apricot", "avocado", "broccoli", "carrot",
                 "cherry", "garlic", "grape", "melon", "leak", "kiwi", "mango", "mushroom", "nut", "olive", "pea",
@@ -31,17 +33,13 @@ public class HomeWork3_2 {
         System.out.println(Arrays.toString(words));
         System.out.println("Отгадай каке слово я загадал:");
         String word = words[r];
-
+        
         int count = 0;//подсчет количества символов в рандомном слове
         for (int f = 0; f < word.length(); f++) {
             count++;
         }
-       String scan = sc.nextLine();
-        while (word!=scan){
-        if (word.equals(scan)) {
-            System.out.println("Вы выиграли!");
-            break;
-        } else {
+        String scan = sc.nextLine();
+        while (!word.equals(scan)) {
             for (int i = 0; i < 15; i++) {
                 int count1 = 0;//подсчет количества символов в сканированном слове
                 for (int f = 0; f < scan.length(); f++) {
@@ -50,7 +48,6 @@ public class HomeWork3_2 {
                 if ((i < count) && (i < count1)) {
                     if (word.charAt(i) == scan.charAt(i)) {
                         System.out.print(scan.charAt(i));
-
                     } else {
                         System.out.print("#");
                     }
@@ -58,12 +55,11 @@ public class HomeWork3_2 {
                     System.out.print("#");
                 }
             }
-               System.out.println();
-               System.out.println("повторите попытку");
-               scan = sc.nextLine();
-
+            System.out.println();
+            System.out.println("повторите попытку");
+            scan = sc.nextLine();
         }
-    }
+        System.out.println("Вы выиграли!");
     }
 }
 
