@@ -1,3 +1,5 @@
+package home_work_3;
+
 import java.util.Random;
 import java.util.Scanner;
 /*Написать программу, которая загадывает случайное число от 0 до 9, и пользователю дается 3
