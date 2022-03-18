@@ -39,7 +39,6 @@ public class HomeWork5 {
     }
 }
 
-
 class Person {
     final private String fullName;
     final private String position;
@@ -81,7 +80,6 @@ class Person {
         return age;
     }
 
-
     String getInformation(int a, int b) {
         int c = a + b;
         return getInformation() + ", c=" + c;
@@ -92,10 +90,7 @@ class Person {
         System.out.println(getInformation());
     }
 
-
     String getInformation() {
         return "fullName=" + fullName + ", position=" + position + ", email=" + email + ", phone=" + phone + ", salary=" + salary + ", age=" + age;
     }
 }
-
-
