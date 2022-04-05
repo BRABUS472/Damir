@@ -1,19 +1,21 @@
+package draft;
+
 public class J1Lesson6 {
     public static void main(String[] args) {
         IAnimal[] animals = { // в качестве базового типа можно указывать интерфейс который реализует базовый класс
-                new Cat("Kruzik", "white", 3),
-                new Dog("Shark", "black", 5)
+                new Cat1("Kruzik", "white", 3),
+                new Dog1("Shark", "black", 5)
     };
       for (IAnimal animal:animals){
           System.out.println(animal+"-"+animal.voice());
       }
-        //Animal animal = new Animal("-","-",-1); выйдет ошибка из - за абстракции класса animal
+        //draft.Animal animal = new draft.Animal("-","-",-1); выйдет ошибка из - за абстракции класса animal
         //System.out.println(animal+"-"+animal.voice());
     }
 }
 
-class Cat extends Animal{
-    Cat(String name, String color, int age){
+class Cat1 extends Animal1{
+    Cat1(String name, String color, int age){
         super(name,color,age);
     }
     @Override
@@ -21,8 +23,8 @@ class Cat extends Animal{
         return "meow";
     }
 }
-class Dog extends Animal{
-    Dog(String name, String color, int age){
+class Dog1 extends Animal1{
+    Dog1(String name, String color, int age){
         super(name,color,age);
     }
     @Override
@@ -34,11 +36,11 @@ interface IAnimal { // интерфейс
     String voice();
 }
 
-abstract class Animal implements IAnimal  {  //абстракт Не дает создать объект данного класса, но дает возможность наследования. Implements реализация интерфейса (подключаем интерфейся)
+abstract class Animal1 implements IAnimal  {  //абстракт Не дает создать объект данного класса, но дает возможность наследования. Implements реализация интерфейса (подключаем интерфейся)
     String name;
     String color;
     int age;
-    Animal(String name, String color, int age) {
+    Animal1(String name, String color, int age) {
         this.name = name;
         this.color = color;
         this.age= age;

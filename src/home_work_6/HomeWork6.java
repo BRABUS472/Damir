@@ -13,11 +13,11 @@ package home_work_6;
 public class HomeWork6 {
     public static void main(String[] args) {
         Animal[] animals = {
-                new Cat("Dog1", 20, 0, 1),
-                new Dog("Cat1", 200, 12, 0.2f)
+                new Cat("Dog1", 200, 0, 2),
+                new Dog("Cat1", 500, 10, 0.5f)
         };
         for (Animal animal : animals) {
-            System.out.println(animal + " run:" + animal.run() + " swim:" + animal.swim() + " jump:" + animal.jump());
+            System.out.println(animal + "\nrun:" + animal.run(20) + " swim:" + animal.swim(20) + " jump:" + animal.jump(2));
         }
     }
 }
@@ -28,23 +28,7 @@ class Cat extends Animal {
     }
 
     @Override
-    public Boolean run() {
-        if (run <= 200)
-            return true;
-        return false;
-    }
-
-    @Override
-    public Boolean swim() {
-        if (swim == 0)
-            return true;
-        return false;
-    }
-
-    @Override
-    public Boolean jump() {
-        if (jump <= 2)
-            return true;
+    public Boolean swim(int distance) {
         return false;
     }
 }
@@ -54,28 +38,7 @@ class Dog extends Animal {
         super(name, run, swim, jump);
     }
 
-    @Override
-    public Boolean run() {
-        if (run <= 500)
-            return true;
-        return false;
-    }
-
-    @Override
-    public Boolean swim() {
-        if (swim <= 10)
-            return true;
-        return false;
-    }
-
-    @Override
-    public Boolean jump() {
-        if (jump <= 0.5)
-            return true;
-        return false;
-    }
 }
-
 abstract class Animal {
     String name;
     int run;
@@ -89,14 +52,20 @@ abstract class Animal {
         this.jump = jump;
     }
 
-    abstract Boolean run();
+    public Boolean run(int distance) {
+        return run >= distance;
+    }
 
-    abstract Boolean swim();
+    public Boolean swim(int distance) {
+        return swim >= distance;
+    }
 
-    abstract Boolean jump();
+    public Boolean jump(float height) {
+        return jump >= height;
+    }
 
     @Override
     public String toString() {
-        return name;
+        return "name:"+name+"\nParameter:\nrun:"+run+"\nswim:"+swim+"\njump:"+jump;
     }
 }
