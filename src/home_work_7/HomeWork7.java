@@ -13,20 +13,17 @@ package home_work_7;
 public class HomeWork7 {
     public static void main(String[] args) {
         Cat[] catArr = new Cat[3];
-        catArr[0] = new Cat("Barsik", 40, false);
-        catArr[1] = new Cat("Murzik", 50, false);
-        catArr[2] = new Cat("Dusiy", 6, false);
+        catArr[0] = new Cat("Barsik", 40);
+        catArr[1] = new Cat("Murzik", 50);
+        catArr[2] = new Cat("Dusiy", 60);
 
         Plate plate = new Plate(100);
         plate.info();
-
         for (Cat cat : catArr) {
-            System.out.println(cat.name +" satiety: " + cat.satiety(plate.food));
+            System.out.println(cat.name + " satiety: " + cat.isSatiety(plate.food));
             cat.eat(plate);
             plate.info();
-            plate.addition();
         }
-        plate.info();
     }
 }
 
@@ -40,18 +37,11 @@ class Plate {
     public void decreaseFood(int n) {
         if (food >= n) {
             food -= n;
-        } else
-            notFood();
-    }
-
-    public void addition(){//метод добавления еды в тарелку
-        if (food == 0){
-            food += 100;
         }
     }
 
-    public void notFood() {
-        System.out.println("not enough food");
+    public void addition() {//метод добавления еды в тарелку
+        food += 100;
     }
 
     public void info() {
@@ -62,24 +52,29 @@ class Plate {
 class Cat {
     String name;
     int appetite;
-    boolean satiety;
 
-    public Cat(String name, int appetite, boolean satiety) {
+
+    public Cat(String name, int appetite) {
         this.name = name;
         this.appetite = appetite;
-        this.satiety = satiety;
-
     }
 
     public void eat(Plate plate) {
-        plate.decreaseFood(appetite);
+        if (appetite > plate.food) {
+            System.out.println("not enough food, the cat did not eat");
+            System.out.println("add food to the plate");
+            plate.addition();
+        }else {
+            plate.decreaseFood(appetite);
+        }
     }
 
-    public Boolean satiety(int food) {
+    public Boolean isSatiety(int food) {
         return appetite <= food;
     }
+
     @Override
     public String toString() {
-        return "name:"+name;
+        return "name:" + name;
     }
 }
