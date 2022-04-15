@@ -14,24 +14,30 @@ public class HomeWork7 {
     public static void main(String[] args) {
         Cat[] catArr = new Cat[3];
         catArr[0] = new Cat("Barsik", 40);
-        catArr[1] = new Cat("Murzik", 50);
+        catArr[1] = new Cat("Murzik", 150);
         catArr[2] = new Cat("Dusiy", 60);
-
         Plate plate = new Plate(100);
         plate.info();
         for (Cat cat : catArr) {
-            System.out.println(cat.name + " satiety: " + cat.isSatiety(plate.food));
-            cat.eat(plate);
+            if (!cat.eat(plate)) {
+                plate.addFood();
+                cat.eat(plate);
+            }
+            System.out.println(cat.name + " satiety: " + cat.isSatiety());
             plate.info();
         }
     }
 }
 
 class Plate {
-    int food;
+    private int food;
 
     public Plate(int food) {
         this.food = food;
+    }
+
+    public int getFood() {
+        return food;
     }
 
     public void decreaseFood(int n) {
@@ -40,7 +46,7 @@ class Plate {
         }
     }
 
-    public void addition() {//метод добавления еды в тарелку
+    public void addFood() {//метод добавления еды в тарелку
         food += 100;
     }
 
@@ -53,24 +59,25 @@ class Cat {
     String name;
     int appetite;
 
-
     public Cat(String name, int appetite) {
         this.name = name;
         this.appetite = appetite;
     }
 
-    public void eat(Plate plate) {
-        if (appetite > plate.food) {
+    public boolean eat(Plate plate) {
+        if (appetite > plate.getFood()) {
             System.out.println("not enough food, the cat did not eat");
             System.out.println("add food to the plate");
-            plate.addition();
-        }else {
+            return false;
+        } else {
             plate.decreaseFood(appetite);
+            appetite = 0;
+            return true;
         }
     }
 
-    public Boolean isSatiety(int food) {
-        return appetite <= food;
+    public Boolean isSatiety() {
+        return appetite <= 0;
     }
 
     @Override
