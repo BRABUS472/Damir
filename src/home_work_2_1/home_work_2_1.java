@@ -1,4 +1,4 @@
-/*1.Создайте три класса Человек, Кот, Робот, которые не наследуются от одного класса. Эти
+package home_work_2_1;/*1.Создайте три класса Человек, Кот, Робот, которые не наследуются от одного класса. Эти
 классы должны уметь бегать и прыгать (методы просто выводят информацию о действии в
 консоль).
 2. Создайте два класса: беговая дорожка и стена, при прохождении через которые, участники
@@ -33,36 +33,33 @@ public class home_work_2_1 {
         Treadmill treadmill = new Treadmill(200);
         Wall wall = new Wall(10);
 
-        for (Cat cat : cats) {
-            System.out.println(cat.getName() + " " + cat.start_run() + ", результат: " + treadmill.run(cat));
-            if (treadmill.run(cat) == false) {
-                System.out.println("участник не смог пройти припятсвие, участник снят");
-                continue;
-            }
-            System.out.println(cat.getName() + " " + cat.start_jump() + " , результат: " + wall.jump(cat));
-        }
-        for (Human human : humans) {
-            System.out.println(human.getName() + " " + human.start_run() + ", результат: " + treadmill.run(human));
-            if (treadmill.run(human) == false) {
-                System.out.println("участник не смог пройти припятсвие, участник снят");
-                continue;
-            }
-            System.out.println(human.getName() + " " + human.start_jump() + " , результат: " + wall.jump(human));
-        }
-        for (Robot robot : robots) {
-            System.out.println(robot.getName() + " " + robot.start_run() + ", результат: " + treadmill.run(robot));
-            if (treadmill.run(robot) == false) {
-                System.out.println("участник не смог пройти припятсвие, участник снят");
-                continue;
-            }
-            System.out.println(robot.getName() + " " + robot.start_jump() + " , результат: " + wall.jump(robot));
-        }
+
+        getListResult(cats, treadmill, wall);
+        getListResult(humans, treadmill, wall);
+        getListResult(robots, treadmill, wall);
+
     }
 
+    public static void getListResult(Participant[] participants, Treadmill treadmill, Wall wall) {
+        for (Participant participant : participants) {
+            getResult(participant, treadmill, wall);
+        }
+
+    }
+
+    public static void getResult(Participant participant, Treadmill treadmill, Wall wall) {
+        System.out.println(participant + " " + participant.start_run() + ", результат: " + treadmill.run(participant));
+        if (!treadmill.run(participant)) {
+            System.out.println("участник не смог пройти припятсвие, участник снят");
+            return;
+        }
+        System.out.println(participant + " " + participant.start_jump() + " , результат: " + wall.jump(participant));
+
+    }
 }
 
 
-class Cat {
+class Cat implements Participant {
 
     private String name;
     private int run;
@@ -78,11 +75,13 @@ class Cat {
         return name;
     }
 
+    @Override
     public int getRun() {
         return run;
     }
 
-    int getJump() {
+    @Override
+    public int getJump() {
         return jump;
     }
 
@@ -100,7 +99,7 @@ class Cat {
     }
 }
 
-class Human {
+class Human implements Participant {
 
     private String name;
     private int run;
@@ -116,11 +115,13 @@ class Human {
         return name;
     }
 
-    int getRun() {
+    @Override
+    public int getRun() {
         return run;
     }
 
-    int getJump() {
+    @Override
+    public int getJump() {
         return jump;
     }
 
@@ -138,7 +139,7 @@ class Human {
     }
 }
 
-class Robot {
+class Robot implements Participant {
 
     private String name;
     private int run;
@@ -154,11 +155,13 @@ class Robot {
         return name;
     }
 
-    int getRun() {
+    @Override
+    public int getRun() {
         return run;
     }
 
-    int getJump() {
+    @Override
+    public int getJump() {
         return jump;
     }
 
@@ -183,16 +186,8 @@ class Treadmill {
         this.distance = distance;
     }
 
-    public Boolean run(Cat cat) {
-        return cat.getRun() >= distance;
-    }
-
-    public Boolean run(Human human) {
-        return human.getRun() >= distance;
-    }
-
-    public Boolean run(Robot robot) {
-        return robot.getRun() >= distance;
+    public Boolean run(Participant participant) {
+        return participant.getRun() >= distance;
     }
 }
 
@@ -203,15 +198,8 @@ class Wall {
         this.height = height;
     }
 
-    public Boolean jump(Cat cat) {
-        return cat.getJump() >= height;
+    public Boolean jump(Participant participant) {
+        return participant.getJump() >= height;
     }
 
-    public Boolean jump(Human human) {
-        return human.getJump() >= height;
-    }
-
-    public Boolean jump(Robot robot) {
-        return robot.getJump() >= height;
-    }
 }
