@@ -1,4 +1,5 @@
-package home_work_2_1;/*1.Создайте три класса Человек, Кот, Робот, которые не наследуются от одного класса. Эти
+package home_work_2_1;
+/*1.Создайте три класса Человек, Кот, Робот, которые не наследуются от одного класса. Эти
 классы должны уметь бегать и прыгать (методы просто выводят информацию о действии в
 консоль).
 2. Создайте два класса: беговая дорожка и стена, при прохождении через которые, участники
@@ -30,31 +31,38 @@ public class home_work_2_1 {
                 new Robot("Robot2", 150, 70),
                 new Robot("Robot3", 700, 200)
         };
-        Treadmill treadmill = new Treadmill(200);
-        Wall wall = new Wall(10);
+        Treadmill[] treadmills ={
+                new Treadmill(200),
+                new Treadmill(300),
+                new Treadmill(400)
+        };
+        Wall[] walls = {new Wall(10),
+                       new Wall(20),
+                       new Wall(30)
+};
 
-
-        getListResult(cats, treadmill, wall);
-        getListResult(humans, treadmill, wall);
-        getListResult(robots, treadmill, wall);
+        getListResult(cats, treadmills, walls);
+        getListResult(humans, treadmills, walls);
+        getListResult(robots, treadmills, walls);
 
     }
 
-    public static void getListResult(Participant[] participants, Treadmill treadmill, Wall wall) {
+    public static void getListResult(Participant[] participants, Treadmill[] treadmills, Wall[] walls) {
         for (Participant participant : participants) {
-            getResult(participant, treadmill, wall);
+            getResult(participant, treadmills, walls);
         }
 
     }
 
-    public static void getResult(Participant participant, Treadmill treadmill, Wall wall) {
-        System.out.println(participant + " " + participant.start_run() + ", результат: " + treadmill.run(participant));
-        if (!treadmill.run(participant)) {
-            System.out.println("участник не смог пройти припятсвие, участник снят");
-            return;
+    public static void getResult(Participant participant, Treadmill[] treadmills, Wall[] walls) {
+        for(int i = 0;i<treadmills.length;i++) {
+            System.out.println("Испытание номер "+(i+1)+" "+participant + " " + participant.start_run() + ", результат: " + treadmills[i].run(participant));
+            if (!treadmills[i].run(participant)) {
+                System.out.println("участник не смог пройти припятсвие, участник снят");
+                return;
+            }
+            System.out.println(participant + " " + participant.start_jump() + " , результат: " + walls[i].jump(participant));
         }
-        System.out.println(participant + " " + participant.start_jump() + " , результат: " + wall.jump(participant));
-
     }
 }
 
