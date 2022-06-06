@@ -26,7 +26,6 @@ public class HomeWork2_2 {
             System.out.println();
         }
 
-
         try {
             a.check(table);
 
@@ -42,7 +41,6 @@ public class HomeWork2_2 {
         System.out.println("Продолжение банкета");
         a.summ(a.integer(table));
         System.out.println(a.summa);
-
     }
 
     public String[][] check(String[][] table) throws MyArraySizeException {
@@ -54,21 +52,20 @@ public class HomeWork2_2 {
         return table;
     }
 
-    public int[][] integer(String[][] table)  {
+    public int[][] integer(String[][] table) {
         int[][] arr = new int[table.length][table.length];
         System.out.println();
         for (int i = 0; i < table.length; i++) {
             for (int j = 0; j < table.length; j++) {
                 try {
                     arr[i][j] = Integer.parseInt(table[i][j]);
-                }catch (NumberFormatException e){
+                } catch (NumberFormatException e) {
                     throw new MyArrayDataException();
                 }
             }
         }
         return arr;
     }
-
 
     public int summ(int[][] table) {
 
@@ -79,7 +76,6 @@ public class HomeWork2_2 {
         }
         return summa;
     }
-
 }
 
 
