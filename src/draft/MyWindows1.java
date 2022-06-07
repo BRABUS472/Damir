@@ -1,4 +1,14 @@
 package draft;
+//● JFrame – окно приложения;
+//● JButton – кнопка;
+//● JLabel – надпись;
+//● JTextField – однострочное текстовое поле;
+//● JTextArea – многострочное текстовое поле;
+//● JScrollPane – контейнер для пролистывания контента;
+//● JMenuBar – верхнее меню программы;
+//● JTable – таблица;
+//● JRadioButton – RadioButton;
+//● JCheckBox – CheckBox.
 
 import javax.swing.*;
 import java.awt.*;
@@ -89,8 +99,10 @@ class MyWindow5 extends JFrame{
         setVisible(true);
     }
 }
-//FlowLayout – располагает элементы в одну строку, когда ширины строки становится недостаточно,
-//переносит новые элементы на следующую
+
+//GridLayout-Элементы управления раскладываются по ячейкам таблицы, для которой задано количество строки и
+//столбцов. Высота строк и ширина столбцов зависит от их количества и размеров формы, то есть
+//вручную задать значения этих свойств нельзя.
 class MyWindow6 extends JFrame {
     public MyWindow6() {
         setBounds(500,500,400,300);
@@ -105,6 +117,27 @@ class MyWindow6 extends JFrame {
         setVisible(true);
     }
 }
+
+//Отключение компоновщика элементов-Возможен сценарий ручной расстановки элементов путем указания их абсолютных координат. Для
+//этого необходимо указать setLayout(null) и для каждого элемента указать его координаты и размеры
+//с помощью метода setBounds().
+
+class MyWindow7 extends JFrame{
+public MyWindow7(){
+    setBounds(500,500,300,300);
+    setTitle("Manual GUI");
+    setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    setLayout(null);
+    JTextField field = new JTextField();
+    field.setBounds(20,20,120,32);
+    add(field);
+    JButton button= new JButton("Нажми сюда");
+    button.setBounds(20,60,120,32);
+    add(button);
+    setVisible(true);
+}
+}
+
 public class MyWindows1 {
     public static void main(String[] args) {
         Window myWindow1 = new MyWindow1();
@@ -113,5 +146,6 @@ public class MyWindows1 {
         Window myWindow4 = new MyWindow4();
         Window myWindow5  =new MyWindow5();
         Window myWindow6  =new MyWindow6();
+        Window myWindow7  =new MyWindow7();
     }
 }
