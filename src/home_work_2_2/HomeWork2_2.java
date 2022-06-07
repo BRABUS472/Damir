@@ -15,9 +15,8 @@ public class HomeWork2_2 {
 
     public static void main(String args[]) throws MyArrayDataException, MyArraySizeException {
 
-        String[][] table = {{"2", "6", "4", "0"}, {"2", "20", "4", "4"}, {"20", "4", "6", "7"}, {"2", "5", "2", "8"}};
+        String[][] table = {{"1", "6", "4", "2"}, {"2", "20", "4", "4"}, {"20", "4", "6", "7"}, {"2", "5", "2", "8"}};
         HomeWork2_2 a = new HomeWork2_2();
-
 
         for (int i = 0; i < table.length; i++) {
             for (int j = 0; j < table.length; j++) {
@@ -28,18 +27,14 @@ public class HomeWork2_2 {
 
         try {
             a.check(table);
-
+            a.summ(a.integer(table));
         } catch (MyArraySizeException exception) {
             exception.printMessage();
-        }
-        try {
-            a.integer(table);
         } catch (MyArrayDataException e) {
             e.printMessage();
         }
 
         System.out.println("Продолжение банкета");
-        a.summ(a.integer(table));
         System.out.println(a.summa);
     }
 
@@ -60,7 +55,7 @@ public class HomeWork2_2 {
                 try {
                     arr[i][j] = Integer.parseInt(table[i][j]);
                 } catch (NumberFormatException e) {
-                    throw new MyArrayDataException();
+                    throw new MyArrayDataException(i, j);
                 }
             }
         }
