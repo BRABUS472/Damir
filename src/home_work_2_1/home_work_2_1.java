@@ -1,4 +1,5 @@
-package home_work_2_1;/*1.Создайте три класса Человек, Кот, Робот, которые не наследуются от одного класса. Эти
+package home_work_2_1;
+/*1.Создайте три класса Человек, Кот, Робот, которые не наследуются от одного класса. Эти
 классы должны уметь бегать и прыгать (методы просто выводят информацию о действии в
 консоль).
 2. Создайте два класса: беговая дорожка и стена, при прохождении через которые, участники
@@ -14,52 +15,48 @@ package home_work_2_1;/*1.Создайте три класса Человек, �
 
 public class home_work_2_1 {
     public static void main(String[] args) {
-        Cat[] cats = {
+
+        IParticipant[] participants ={
                 new Cat("Cat1", 100, 20),
                 new Cat("Cat2", 150, 30),
-                new Cat("Cat3", 300, 15)
-        };
-        Human[] humans = {
+                new Cat("Cat3", 300, 15),
                 new Human("Human1", 200, 40),
                 new Human("Human2", 450, 20),
-                new Human("Human3", 500, 55)
-        };
-
-        Robot[] robots = {
+                new Human("Human3", 500, 55),
                 new Robot("Robot1", 100, 10),
                 new Robot("Robot2", 150, 70),
                 new Robot("Robot3", 700, 200)
+
         };
-        Treadmill treadmill = new Treadmill(200);
-        Wall wall = new Wall(10);
+        ITrail[] trails = {
+                new Treadmill(200),
+                new Treadmill(300),
+                new Treadmill(400),
+                new Wall(10),
+                new Wall(20),
+                new Wall(30)
+        };
 
-
-        getListResult(cats, treadmill, wall);
-        getListResult(humans, treadmill, wall);
-        getListResult(robots, treadmill, wall);
-
+      getResult(participants, trails);
     }
 
-    public static void getListResult(Participant[] participants, Treadmill treadmill, Wall wall) {
-        for (Participant participant : participants) {
-            getResult(participant, treadmill, wall);
+
+    public static void getResult(IParticipant[] participants, ITrail[] trails) {
+        for (IParticipant participant : participants) {
+            for (ITrail trail: trails) {
+                if(trail.check(participant)){
+                        System.out.println(participant + " " + "результат: " + trail.check(participant));
+                }else{
+                    System.out.println(" Участник лох");
+                }
+            }
         }
-
-    }
-
-    public static void getResult(Participant participant, Treadmill treadmill, Wall wall) {
-        System.out.println(participant + " " + participant.start_run() + ", результат: " + treadmill.run(participant));
-        if (!treadmill.run(participant)) {
-            System.out.println("участник не смог пройти припятсвие, участник снят");
-            return;
-        }
-        System.out.println(participant + " " + participant.start_jump() + " , результат: " + wall.jump(participant));
-
     }
 }
 
 
-class Cat implements Participant {
+
+class Cat implements IParticipant {
 
     private String name;
     private int run;
@@ -99,7 +96,7 @@ class Cat implements Participant {
     }
 }
 
-class Human implements Participant {
+class Human implements IParticipant {
 
     private String name;
     private int run;
@@ -139,7 +136,7 @@ class Human implements Participant {
     }
 }
 
-class Robot implements Participant {
+class Robot implements IParticipant {
 
     private String name;
     private int run;
@@ -179,27 +176,38 @@ class Robot implements Participant {
     }
 }
 
-class Treadmill {
+class Treadmill implements ITrail {
     private int distance;
 
     Treadmill(int distance) {
         this.distance = distance;
     }
 
-    public Boolean run(Participant participant) {
+    public Boolean run(IParticipant participant) {
         return participant.getRun() >= distance;
+    }
+    @Override
+    public boolean check(IParticipant participant){
+        System.out.print(participant.start_run());
+       return participant.getRun()>=this.distance;
     }
 }
 
-class Wall {
+class Wall implements ITrail {
     private int height;
 
     Wall(int height) {
         this.height = height;
     }
 
-    public Boolean jump(Participant participant) {
+    public Boolean jump(IParticipant participant) {
         return participant.getJump() >= height;
     }
+    @Override
+    public boolean check(IParticipant participant){
+        System.out.print(participant.start_jump());
+        return participant.getJump()>=this.height;
+    }
+
 
 }
