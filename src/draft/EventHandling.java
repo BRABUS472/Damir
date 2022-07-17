@@ -1,13 +1,14 @@
 package draft;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class EventHandling {
     public static void main(String[] args) {
-      //Window MyWindow = new MyWindow();
-      //Window MyWindowEnter = new MyWindowEnter();
-      //Window MyWindowMouse = new MyWindowMouse();
+      Window MyWindow = new MyWindow();
+      Window MyWindowEnter = new MyWindowEnter();
+      Window MyWindowMouse = new MyWindowMouse();
      new MyWindowClose();
     }
 }
