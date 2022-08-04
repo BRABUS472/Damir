@@ -26,25 +26,15 @@ class Chat extends JFrame {
         setTitle(TITLE);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLayout(null);
-
-
         JTextArea area = createArea();
         JScrollPane pane = createPane(area);
         JTextField field = createField(area);
         JButton button = createButton(new ClickListener() {
             @Override
             public void onClick() {
-                String text = field.getText();
-                field.setText("");
-                while (text.startsWith(" ")) {
-                    text = text.replaceFirst(" ", "");
-                }
-                if (text.equals("")) return;
-                area.append(text + "\n");
+                actionChat(field, area);
             }
         });
-
-
         setVisible(true);
         add(field);
         add(button);
@@ -69,13 +59,7 @@ class Chat extends JFrame {
         field.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String text = field.getText();
-                field.setText("");
-                while (text.startsWith(" ")) {
-                    text = text.replaceFirst(" ", "");
-                }
-                if (text.equals("")) return;
-                area.append(text + "\n");
+                actionChat(field, area);
             }
         });
         return field;
@@ -86,7 +70,6 @@ class Chat extends JFrame {
     }
 
     public JButton createButton(ClickListener clickListener) {
-
         JButton button = new JButton(SEND);
         button.setBounds(210, 220, 70, 30);
         button.addActionListener(new ActionListener() {
@@ -96,5 +79,15 @@ class Chat extends JFrame {
             }
         });
         return button;
+    }
+
+    public void actionChat(JTextField field, JTextArea area) {
+        String text = field.getText();
+        field.setText("");
+        while (text.startsWith(" ")) {
+            text = text.replaceFirst(" ", "");
+        }
+        if (text.equals("")) return;
+        area.append(text + "\n");
     }
 }
