@@ -19,12 +19,23 @@ public class HomeWork2_5 {
 
     public static void main(String[] args) {
 
-        float min = getNumber();
-        float max = getNumber();
-        int threadCount = getNumber();
-        for (int i = 1; i <= threadCount; i++) {
-
+        float min = getNumber("Введите первое число:");
+        while (min<2){
+            System.out.println("простое число должно быть больше 1");
+            min=getNumber("Введите первое число:");
         }
+        float max = getNumber("Введите второе число:");
+        while ((max<2)||(max==min)) {
+            System.out.println("простое число должно быть больше 1 и не должен равняться первому числу");
+            max=getNumber("Введите второе число:");
+        }
+
+        if(min>max){
+           float n=min;
+            min=max;
+            max=n;
+        }
+        int threadCount = getNumber("Введите количество потоков:");
         for (int i = 0; i < threadCount; i++) {
             float minimum = ((max - min) / threadCount) * i + min;
             float maximum = ((max - min) / threadCount) * (i + 1) + min;
@@ -41,12 +52,16 @@ public class HomeWork2_5 {
 
     public static Scanner sc = new Scanner(System.in);
 
-    public static int getNumber() {
-        int x;
-        System.out.println("Введите число:");
+    public static int getNumber(String message) {
+        int x=0;
+        System.out.println(message);
+        while (!sc.hasNextInt()) {
+            System.out.println("Ошибка, введите число:");
+            sc = new Scanner(System.in);
+        }
         x = sc.nextInt();
         while (x < 0) {
-            System.out.println("число меньше 0, введите корректное число:");
+            System.out.println("число меньше 0 или равен 0, введите корректное число:");
             x = sc.nextInt();
         }
         return x;
@@ -54,15 +69,14 @@ public class HomeWork2_5 {
 
     public static void findPrimeNumber(int min, int max) {
         boolean b = true;
-        for (int P = min; P <= max; P++) {
-            for (int i = 2; i < P; i++) {
-                if (P % i == 0) {
+        for (int p = min; p <= max; p++) {
+            for (int i = 2; i < p; i++) {
+                if (p % i == 0) {
                     b = false;
-                    break;
                 }
             }
             if (b)
-                log(P);
+                log(p);
             else b = true;
         }
     }
