@@ -3,39 +3,65 @@ package home_work_3_3;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Scanner;
 
 public class Client {
 
-        public Client() {
-        }
 
-        public static void main(String[] args) throws InterruptedException {
-            try {
-                Socket socket = new Socket("localhost", 3345);
-                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                DataOutputStream oos = new DataOutputStream(socket.getOutputStream());
-                DataInputStream ois = new DataInputStream(socket.getInputStream());
-                System.out.println("Client connected to socket.");
-                while (true) {
-                    String clientCommand = br.readLine();
-                    oos.writeUTF(clientCommand);
-                    oos.flush();
+    public static void main(String[] args) {
 
-                    if (clientCommand.equalsIgnoreCase("quit")) {
-                        System.out.println("Client kill connections");
-                        break;
+        Socket socket = null;
+
+        try {
+            socket = new Socket("localhost", 1234);
+            Scanner in = new Scanner(socket.getInputStream());
+
+            PrintWriter out = new PrintWriter(socket.getOutputStream(),true);
+            Scanner console = new Scanner(System.in);
+
+            Thread t1 =  new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (true) {
+                        String str = in.nextLine();
+                        System.out.println(str);
                     }
-
-                    String in = ois.readUTF();
-                    System.out.print(in);
-                    oos.writeUTF("");
-                    oos.flush();
-
                 }
-            } catch (UnknownHostException e) {
+            });
+
+            t1.start();
+
+            Thread t2 = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (true) {
+                        System.out.println("Введите сообщение");
+                        String str = console.nextLine();
+                        out.println(str);
+                    }
+                }
+            });
+
+            t2.setDaemon(true);
+            t2.start();
+
+
+            try {
+                t1.join();
+            } catch (InterruptedException e) {
                 e.printStackTrace();
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                socket.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+
+    }
     }

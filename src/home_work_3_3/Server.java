@@ -3,45 +3,80 @@ package home_work_3_3;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Server {
 
+    public static void main(String[] args) {
 
-        public Server() {
-        }
+        ServerSocket server = null;
+        Socket socket = null;
 
-        public static void main(String[] args) throws InterruptedException {
-            try {
-                ServerSocket server = new ServerSocket(3345);
-                System.out.print("Waiting Client");
-                System.out.println();
-                Socket client = server.accept();
-                System.out.println("Connection accepted.");
-                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                DataOutputStream out = new DataOutputStream(client.getOutputStream());
-                DataInputStream in = new DataInputStream(client.getInputStream());
-                while(true) {
-                    String entry = in.readUTF();
-                    System.out.println(entry);
-                    out.writeUTF("");
-                    String clientCommand = br.readLine();
-                    out.writeUTF(clientCommand);
-                    out.flush();
-                    // String exit = br.readLine();
-                    if (entry.equalsIgnoreCase("quit")) {
-                        out.flush();
-                        System.out.println("Client disconnected");
-                        in.close();
-                        out.close();
-                        client.close();
-                        System.out.println("Closing connections & channels - DONE.");
-                        break;
+        try {
+            server = new ServerSocket(1234);
+            System.out.println("Сервер запущен!");
+
+            socket = server.accept();
+
+            Scanner sc = new Scanner(socket.getInputStream());
+            PrintWriter out = new PrintWriter(socket.getOutputStream());
+
+            Scanner console = new Scanner(System.in);
+
+            Thread t1 = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (true) {
+                        String str = sc.nextLine();
+                        if(str.equals("/end")) break;;
+                        System.out.println("Client " + str);
+                        out.println("echo " + str);
                     }
-                    out.flush();
+
                 }
+            });
+
+            t1.start();
+//
+//            Thread t2 = new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    while (true) {
+//                        System.out.println("Введите сообщение");
+//                        String str = console.nextLine();
+//                        System.out.println("Сообщение отправлено");
+//                        out.println(str);
+//                    }
+//
+//                }
+//            });
+//
+//            t2.setDaemon(true);
+//            t2.start();
+
+
+            try {
+                t1.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                server.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+
+    }
     }
 
