@@ -6,7 +6,6 @@ public class Ser_DerSer {
     public static void main (String[] args) throws IOException, ClassNotFoundException {
 
 
-
         class Students  implements Serializable {
             int id;
             String name;
