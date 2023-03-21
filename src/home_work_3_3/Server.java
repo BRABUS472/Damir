@@ -21,6 +21,8 @@ public class Server {
             Scanner sc = new Scanner(socket.getInputStream());
             PrintWriter out = new PrintWriter(socket.getOutputStream());
 
+            Students students = new Students(1, "Bob");
+
             Scanner console = new Scanner(System.in);
 
             Thread t1 = new Thread(new Runnable() {
@@ -77,7 +79,9 @@ public class Server {
             }
         }
 
-        public void SerServer();
+        public void SerServer(){
+
+        }
     }
     }
 

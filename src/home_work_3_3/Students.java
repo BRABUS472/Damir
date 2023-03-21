@@ -2,7 +2,6 @@ package home_work_3_3;
 
 import java.io.Serializable;
 
-public class Student {
 
     class Students  implements Serializable {
         int id;
@@ -18,5 +17,3 @@ public class Student {
             System.out.println(id + " " + name);
         }
     }
-
-}
