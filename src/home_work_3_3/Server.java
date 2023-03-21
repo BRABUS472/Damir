@@ -12,6 +12,7 @@ public class Server {
         ServerSocket server = null;
         Socket socket = null;
 
+
         try {
             server = new ServerSocket(1234);
             System.out.println("Сервер запущен!");
@@ -21,7 +22,6 @@ public class Server {
             Scanner sc = new Scanner(socket.getInputStream());
             PrintWriter out = new PrintWriter(socket.getOutputStream());
 
-            Students students = new Students(1, "Bob");
 
             Scanner console = new Scanner(System.in);
 
@@ -30,12 +30,28 @@ public class Server {
                 public void run() {
                     while (true) {
                         String str = sc.nextLine();
-                        if(str.equals("/end")) break;;
+                        if (str.equals("/end")) break;
+                        if (str.equals("/ser")) {
+                            SerServer();
+                            System.out.println("сериализация");
+                        }
                         System.out.println("Client " + str);
                         out.println("echo " + str);
                     }
 
                 }
+                public void SerServer() {
+                    Students students = new Students(1, "Bob");
+                    ObjectOutputStream oos = null;
+                    try {
+                        oos = new ObjectOutputStream(new FileOutputStream("Damir/src/home_work_3_3/stud.ser"));
+                        oos.writeObject(students);
+                        oos.close();
+                    } catch (IOException e) {
+                        System.out.println("не удалось сериализовать");;
+                    }
+                }
+
             });
 
             t1.start();
@@ -78,10 +94,8 @@ public class Server {
                 e.printStackTrace();
             }
         }
-
-        public void SerServer(){
-
-        }
     }
-    }
+}
+
+
 
