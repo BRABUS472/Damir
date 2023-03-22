@@ -7,12 +7,12 @@ import java.util.Scanner;
 
 public class Server {
 
+
     public static void main(String[] args) {
 
         ServerSocket server = null;
         Socket socket = null;
-
-
+        
         try {
             server = new ServerSocket(1234);
             System.out.println("Сервер запущен!");
@@ -89,35 +89,45 @@ public class Server {
             }
         }
     }
-    public static void SerServer() {
-        Students students = new Students(1, "Bob");
-        ObjectOutputStream oos = null;
-        try {
-            oos = new ObjectOutputStream(new FileOutputStream("Damir/src/home_work_3_3/stud.ser"));
-            oos.writeObject(students);
-            oos.close();
-        } catch (IOException e) {
-            System.out.println("не удалось сериализовать");;
+        public void sendMsg (String msg){
+            try {
+                this.out.writeUTF(msg);
+            } catch (IOException var3) {
+                var3.printStackTrace();
+            }
         }
-    }
 
-    public static String ReadSerFile() throws IOException {
+        public static void SerServer () {
+            Students students = new Students(1, "Bob");
+            ObjectOutputStream oos = null;
+            try {
+                oos = new ObjectOutputStream(new FileOutputStream("Damir/src/home_work_3_3/stud.ser"));
+                oos.writeObject(students);
+                oos.close();
+            } catch (IOException e) {
+                System.out.println("не удалось сериализовать");
+                ;
+            }
+        }
 
-        String FILENAME = "Damir/src/home_work_3_3/stud.ser";
+        public static String ReadSerFile () throws IOException {
 
-        BufferedReader br = null;
-        FileReader fr= null;
+            String FILENAME = "Damir/src/home_work_3_3/stud.ser";
 
-        fr = new FileReader(FILENAME);
-        br = new BufferedReader(fr);
-        String currentLine;
+            BufferedReader br = null;
+            FileReader fr = null;
 
-        while ((currentLine = br.readLine()) != null) {
+            fr = new FileReader(FILENAME);
+            br = new BufferedReader(fr);
+            String currentLine;
+
+            while ((currentLine = br.readLine()) != null) {
+                System.out.println(currentLine);
+            }
             System.out.println(currentLine);
+            return currentLine;
         }
-        System.out.println(currentLine);
-        return currentLine;
-    }
+
 
 }
 
