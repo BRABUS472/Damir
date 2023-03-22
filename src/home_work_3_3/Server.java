@@ -33,23 +33,17 @@ public class Server {
                         if (str.equals("/end")) break;
                         if (str.equals("/ser")) {
                             SerServer();
+                            try {
+                                ReadSerFile();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             System.out.println("сериализация");
                         }
                         System.out.println("Client " + str);
                         out.println("echo " + str);
                     }
 
-                }
-                public void SerServer() {
-                    Students students = new Students(1, "Bob");
-                    ObjectOutputStream oos = null;
-                    try {
-                        oos = new ObjectOutputStream(new FileOutputStream("Damir/src/home_work_3_3/stud.ser"));
-                        oos.writeObject(students);
-                        oos.close();
-                    } catch (IOException e) {
-                        System.out.println("не удалось сериализовать");;
-                    }
                 }
 
             });
@@ -95,6 +89,36 @@ public class Server {
             }
         }
     }
+    public static void SerServer() {
+        Students students = new Students(1, "Bob");
+        ObjectOutputStream oos = null;
+        try {
+            oos = new ObjectOutputStream(new FileOutputStream("Damir/src/home_work_3_3/stud.ser"));
+            oos.writeObject(students);
+            oos.close();
+        } catch (IOException e) {
+            System.out.println("не удалось сериализовать");;
+        }
+    }
+
+    public static String ReadSerFile() throws IOException {
+
+        String FILENAME = "Damir/src/home_work_3_3/stud.ser";
+
+        BufferedReader br = null;
+        FileReader fr= null;
+
+        fr = new FileReader(FILENAME);
+        br = new BufferedReader(fr);
+        String currentLine;
+
+        while ((currentLine = br.readLine()) != null) {
+            System.out.println(currentLine);
+        }
+        System.out.println(currentLine);
+        return currentLine;
+    }
+
 }
 
 
