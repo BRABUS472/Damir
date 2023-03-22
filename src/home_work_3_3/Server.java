@@ -11,7 +11,7 @@ public class Server {
 
         ServerSocket server = null;
         Socket socket = null;
-        PrintWriter out;
+
 
         try {
             server = new ServerSocket(1234);
@@ -20,18 +20,16 @@ public class Server {
             socket = server.accept();
 
             Scanner sc = new Scanner(socket.getInputStream());
-            out = new PrintWriter(socket.getOutputStream());
-
-
+            PrintWriter out = new PrintWriter(socket.getOutputStream(),true);
             Scanner console = new Scanner(System.in);
 
+            //принятие сервер
             Thread t1 = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     while (true) {
                         String str = sc.nextLine();
                         if (str.equals("/end")) break;
-
                         System.out.println("Client " + str);
                         out.println("echo " + str);
                     }
@@ -39,6 +37,7 @@ public class Server {
             });
             t1.start();
 
+            //отправка сервер
             Thread t2 = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -48,17 +47,17 @@ public class Server {
                         if (str.equals("/ser")) {
                             SerServer();
                             try {
+                                System.out.println(" Сериализованный файл "+ReadSerFile());
                                 out.println(ReadSerFile());
+                                System.out.println("отправка сериализованного файла");
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                             System.out.println("сериализация");
                         }
-
                         System.out.println("Сообщение отправлено");
                         out.println(str);
                     }
-
                 }
             });
 
@@ -116,11 +115,10 @@ public class Server {
             String currentLine;
 
             while ((currentLine = br.readLine()) != null) {
-                System.out.println(currentLine);
-            }
-            System.out.println(currentLine);
-            return currentLine;
-        }
+                return currentLine;
+            }  return FILENAME;
+
+
 //    public void sendMsg(String msg){
 //        try {
 //            this.out.writeUTF(msg);
@@ -128,7 +126,7 @@ public class Server {
 //            var3.printStackTrace();
 //        }
 //    }
-
+        }
 }
 
 
