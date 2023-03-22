@@ -1,6 +1,7 @@
 package home_work_3_3;
 
 import java.io.*;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
@@ -10,6 +11,7 @@ public class Client {
 
     public static void main(String[] args) {
 
+       
         Socket socket = null;
 
         try {
@@ -23,12 +25,11 @@ public class Client {
                 @Override
                 public void run() {
                     while (true) {
-                        String str = in.nextLine();
-                        System.out.println(str);
+                        String str1 = in.nextLine();
+                        System.out.println("Server "+str1);
                     }
                 }
             });
-
             t1.start();
 
             Thread t2 = new Thread(new Runnable() {

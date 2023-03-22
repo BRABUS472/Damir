@@ -7,12 +7,12 @@ import java.util.Scanner;
 
 public class Server {
 
-
     public static void main(String[] args) {
 
         ServerSocket server = null;
         Socket socket = null;
-        
+        PrintWriter out;
+
         try {
             server = new ServerSocket(1234);
             System.out.println("Сервер запущен!");
@@ -20,7 +20,7 @@ public class Server {
             socket = server.accept();
 
             Scanner sc = new Scanner(socket.getInputStream());
-            PrintWriter out = new PrintWriter(socket.getOutputStream());
+            out = new PrintWriter(socket.getOutputStream());
 
 
             Scanner console = new Scanner(System.in);
@@ -31,40 +31,39 @@ public class Server {
                     while (true) {
                         String str = sc.nextLine();
                         if (str.equals("/end")) break;
+
+                        System.out.println("Client " + str);
+                        out.println("echo " + str);
+                    }
+                }
+            });
+            t1.start();
+
+            Thread t2 = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (true) {
+                        System.out.println("Введите сообщение");
+                        String str = console.nextLine();
                         if (str.equals("/ser")) {
                             SerServer();
                             try {
-                                ReadSerFile();
+                                out.println(ReadSerFile());
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                             System.out.println("сериализация");
                         }
-                        System.out.println("Client " + str);
-                        out.println("echo " + str);
+
+                        System.out.println("Сообщение отправлено");
+                        out.println(str);
                     }
 
                 }
-
             });
 
-            t1.start();
-//
-//            Thread t2 = new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    while (true) {
-//                        System.out.println("Введите сообщение");
-//                        String str = console.nextLine();
-//                        System.out.println("Сообщение отправлено");
-//                        out.println(str);
-//                    }
-//
-//                }
-//            });
-//
-//            t2.setDaemon(true);
-//            t2.start();
+            t2.setDaemon(true);
+            t2.start();
 
 
             try {
@@ -88,14 +87,9 @@ public class Server {
                 e.printStackTrace();
             }
         }
+
     }
-        public void sendMsg (String msg){
-            try {
-                this.out.writeUTF(msg);
-            } catch (IOException var3) {
-                var3.printStackTrace();
-            }
-        }
+
 
         public static void SerServer () {
             Students students = new Students(1, "Bob");
@@ -127,7 +121,13 @@ public class Server {
             System.out.println(currentLine);
             return currentLine;
         }
-
+//    public void sendMsg(String msg){
+//        try {
+//            this.out.writeUTF(msg);
+//        } catch (IOException var3) {
+//            var3.printStackTrace();
+//        }
+//    }
 
 }
 
