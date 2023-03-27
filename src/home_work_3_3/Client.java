@@ -17,22 +17,20 @@ public class Client {
         try {
             socket = new Socket("localhost", 1234);
             Scanner in = new Scanner(socket.getInputStream());
-
-            PrintWriter out = new PrintWriter(socket.getOutputStream(),true);
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             Scanner console = new Scanner(System.in);
 
             //принятие клиент
-            Thread t1 =  new Thread(new Runnable() {
+            Thread t1 = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     while (true) {
                         String str1 = in.nextLine();
-                        System.out.println("Server "+str1);
+                        System.out.println("Server " + str1);
                     }
                 }
             });
             t1.start();
-
 
             //отправка клиент
             Thread t2 = new Thread(new Runnable() {
@@ -46,17 +44,14 @@ public class Client {
                     }
                 }
             });
-
             t2.setDaemon(true);
             t2.start();
-
 
             try {
                 t1.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -67,6 +62,5 @@ public class Client {
                 e.printStackTrace();
             }
         }
-
     }
-    }
+}

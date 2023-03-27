@@ -30,6 +30,16 @@ public class Server {
                     while (true) {
                         String str = sc.nextLine();
                         if (str.equals("/end")) break;
+                        if (str.equals("/ser")) {
+                            SerServer();
+                            try {
+                                System.out.println(" Сериализованный файл "+ReadSerFile());
+                                out.println(ReadSerFile());
+                                System.out.println("отправка сериализованного файла");
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
                         System.out.println("Client " + str);
                         out.println("echo " + str);
                     }
@@ -44,19 +54,19 @@ public class Server {
                     while (true) {
                         System.out.println("Введите сообщение");
                         String str = console.nextLine();
-                        if (str.equals("/ser")) {
-                            SerServer();
-                            try {
-                                System.out.println(" Сериализованный файл "+ReadSerFile());
-                                out.println(ReadSerFile());
-                                System.out.println("отправка сериализованного файла");
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            System.out.println("сериализация");
-                        }
+//                        if (str.equals("/ser")) {
+//                            SerServer();
+//                            try {
+//                                System.out.println(" Сериализованный файл "+ReadSerFile());
+//                                out.println(ReadSerFile());
+//                                System.out.println("отправка сериализованного файла");
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
+//                            System.out.println("сериализация");
+//                        }
                         System.out.println("Сообщение отправлено");
-                        out.println(str);
+                        out.println("/ser"+str);
                     }
                 }
             });
