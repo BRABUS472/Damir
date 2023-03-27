@@ -21,12 +21,25 @@ public class Client {
             Scanner console = new Scanner(System.in);
 
             //принятие клиент
+
             Thread t1 = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     while (true) {
                         String str1 = in.nextLine();
-                        System.out.println("Server " + str1);
+                        String[] tokens = str1.split("\\s");
+                        
+                        if (tokens[0].equals("/ser")) {
+                            try {
+                                deSer(tokens [2]);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (ClassNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                            // String nickFromDB = SQLHandler1.getNickByLogPass(tokens[1], tokens[2]);
+                            System.out.println("Server " + str1);
+                        }
                     }
                 }
             });
@@ -62,5 +75,15 @@ public class Client {
                 e.printStackTrace();
             }
         }
+    }
+    public static void  deSer(String s2) throws IOException, ClassNotFoundException {
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Damir/src/home_work_3_3/111/stud.ser"));
+        Students s2 = (Students)ois.readObject();
+        try {
+            ois.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        s2.info();
     }
 }
