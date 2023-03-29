@@ -20,7 +20,7 @@ public class Server {
             socket = server.accept();
 
             Scanner sc = new Scanner(socket.getInputStream());
-            PrintWriter out = new PrintWriter(socket.getOutputStream(),true);
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             Scanner console = new Scanner(System.in);
 
             //принятие сервер
@@ -33,15 +33,15 @@ public class Server {
                         if (str.equals("/ser")) {
                             SerServer();
                             try {
-                                System.out.println(" Сериализованный файл "+ReadSerFile());
-                                out.println(ReadSerFile());
+                                System.out.println(" Сериализованный файл " + ReadSerFile());
+                                out.println("/ser " + ReadSerFile());
                                 System.out.println("отправка сериализованного файла");
-                            } catch (IOException e) {
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
                         System.out.println("Client " + str);
-                        out.println("echo " + str);
+                       // out.println("echo " + str);
                     }
                 }
             });
@@ -54,19 +54,8 @@ public class Server {
                     while (true) {
                         System.out.println("Введите сообщение");
                         String str = console.nextLine();
-//                        if (str.equals("/ser")) {
-//                            SerServer();
-//                            try {
-//                                System.out.println(" Сериализованный файл "+ReadSerFile());
-//                                out.println(ReadSerFile());
-//                                System.out.println("отправка сериализованного файла");
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//                            System.out.println("сериализация");
-//                        }
                         System.out.println("Сообщение отправлено");
-                        out.println("/ser"+str);
+                        out.println("/ser " + str);
                     }
                 }
             });
@@ -99,44 +88,55 @@ public class Server {
 
     }
 
-
-        public static void SerServer () {
-            Students students = new Students(1, "Bob");
-            ObjectOutputStream oos = null;
-            try {
-                oos = new ObjectOutputStream(new FileOutputStream("Damir/src/home_work_3_3/stud.ser"));
-                oos.writeObject(students);
-                oos.close();
-            } catch (IOException e) {
-                System.out.println("не удалось сериализовать");
-                ;
-            }
+    public static void SerServer() {
+        Students students = new Students(1, "Bob");
+        ObjectOutputStream oos = null;
+        try {
+            oos = new ObjectOutputStream(new FileOutputStream("Damir/src/home_work_3_3/stud.ser"));
+            oos.writeObject(students);
+            oos.close();
+        } catch (IOException e) {
+            System.out.println("не удалось сериализовать");
         }
+    }
 
-        public static String ReadSerFile () throws IOException {
-
-            String FILENAME = "Damir/src/home_work_3_3/stud.ser";
-
-            BufferedReader br = null;
-            FileReader fr = null;
-
-            fr = new FileReader(FILENAME);
-            br = new BufferedReader(fr);
-            String currentLine;
-
-            while ((currentLine = br.readLine()) != null) {
-                return currentLine;
-            }  return FILENAME;
-
-
-//    public void sendMsg(String msg){
-//        try {
-//            this.out.writeUTF(msg);
-//        } catch (IOException var3) {
-//            var3.printStackTrace();
+//    public static String ReadSerFile() {
+//        try (InputStreamReader isr = new InputStreamReader(new FileInputStream("Damir/src/home_work_3_3/stud1.ser"))) {
+//
+//            int x;
+//            String text="";
+//            while ((x = isr.read()) != -1) {
+//                text = text+((char) x);
+//            }
+//            System.out.println("Готовый +++" +text);
+//            return text;
+//        } catch (IOException e) {
+//            e.printStackTrace();
 //        }
+//        return null;
 //    }
+
+    public static String ReadSerFile() throws IOException {
+        String FILENAME = "Damir/src/home_work_3_3/stud.ser";
+
+        BufferedReader br = null;
+        FileReader fr = null;
+
+        try {
+            fr = new FileReader(FILENAME);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
+        br = new BufferedReader(fr);
+        String text = "";
+        String currentLine;
+
+        while ((currentLine = br.readLine()) != null) {
+            text = text+currentLine;
+
+        }
+       return text;
+    }
 }
 
 

@@ -28,20 +28,27 @@ public class Client {
                     while (true) {
                         String str1 = in.nextLine();
                         String[] tokens = str1.split("\\s");
-                        
                         if (tokens[0].equals("/ser")) {
-                            try {
-                                deSer(tokens [2]);
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                            System.out.println("пришло сериализованный файл");
+                            String text = "";
+                            for (int i =1; i<tokens.length;i++){
+                                text= text+tokens[i];
+                            }
+                            File file = new File("Damir/src/home_work_3_3/111/stud.ser");
+                            try (FileWriter writer = new FileWriter(file)) {
+                                writer.write(text);
+                                writer.flush();
+                                deSer();
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
                             } catch (ClassNotFoundException e) {
                                 e.printStackTrace();
                             }
-                            // String nickFromDB = SQLHandler1.getNickByLogPass(tokens[1], tokens[2]);
-                            System.out.println("Server " + str1);
+                        }
+                         System.out.print(str1);
                         }
                     }
-                }
+
             });
             t1.start();
 
@@ -76,14 +83,16 @@ public class Client {
             }
         }
     }
-    public static void  deSer(String s2) throws IOException, ClassNotFoundException {
-        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Damir/src/home_work_3_3/111/stud.ser"));
-        Students s2 = (Students)ois.readObject();
-        try {
-            ois.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+    public static void  deSer() throws IOException, ClassNotFoundException {
+
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Damir/src/home_work_3_3/111/stud.ser"));
+            // ObjectInputStream ois = new ObjectInputStream(s1);
+            Students s2 = (Students) ois.readObject();
+            try {
+                ois.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            s2.info();
         }
-        s2.info();
     }
-}
