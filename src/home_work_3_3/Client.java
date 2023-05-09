@@ -27,12 +27,13 @@ public class Client {
                 public void run() {
                     while (true) {
                         String str1 = in.nextLine();
+
                         String[] tokens = str1.split("\\s");
                         if (tokens[0].equals("/ser")) {
                             System.out.println("пришло сериализованный файл");
                             String text = "";
-                            for (int i =1; i<tokens.length;i++){
-                                text= text+tokens[i];
+                            for (int i = 1; i < tokens.length; i++) {
+                                text = text + tokens[i];
                             }
                             File file = new File("Damir/src/home_work_3_3/111/stud.ser");
                             try (FileWriter writer = new FileWriter(file)) {
@@ -45,10 +46,9 @@ public class Client {
                                 e.printStackTrace();
                             }
                         }
-                         System.out.print(str1);
-                        }
+                        // System.out.print(str1);
                     }
-
+                }
             });
             t1.start();
 

@@ -34,7 +34,8 @@ public class Server {
                             SerServer();
                             try {
                                 System.out.println(" Сериализованный файл " + ReadSerFile());
-                                out.println("/ser " + ReadSerFile());
+                               out.println("/ser " + ReadSerFile());
+                               // out.println(ReadSerFile());
                                 System.out.println("отправка сериализованного файла");
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -128,14 +129,14 @@ public class Server {
             e.printStackTrace();
         }
         br = new BufferedReader(fr);
-        String text = "";
+        StringBuffer text = new StringBuffer();
         String currentLine;
 
         while ((currentLine = br.readLine()) != null) {
-            text = text+currentLine;
+            text.append(currentLine) ;
 
         }
-       return text;
+       return text.toString();
     }
 }
 
